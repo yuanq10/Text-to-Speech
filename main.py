@@ -11,7 +11,9 @@ def main():
         print(f"Voice {i}: {voice.name} ({voice.languages})")
         if "Chinese" in voice.name:
             chinese_voice_index = i
-            #break
+            break
+        else:
+            print("The voice you want is not available")
     print("The Chinese voice index is: ", chinese_voice_index)
     engine.setProperty('voice', voices[chinese_voice_index].id)
 
@@ -20,13 +22,14 @@ def main():
         "rate", 
         type=int, 
         nargs="?",  # Makes the argument optional
-        default=150,  # Sets the default value
-        help="Set the speech rate (e.g., 100 for slow, 200 for fast). Default is 150."
+        default=1,  # Sets the default value
+        help="Set the speech rate multiplier (e.g., 1.5 for 1.5 time speed, 0.5 for 0.5 time speed). Default is 1."
     )
     args = parser.parse_args()
 
+    speech_rate = 150 * args.rate
     # Set other properties like rate and volume (optional)
-    engine.setProperty('rate', args.rate)  # Adjust speaking speed
+    engine.setProperty('rate', speech_rate)  # Adjust speaking speed
     engine.setProperty('volume', 1.0)  # Max volume
     print(f"Speech rate set to: {args.rate}")
     print(f"Speech volume set to: 1.0")
